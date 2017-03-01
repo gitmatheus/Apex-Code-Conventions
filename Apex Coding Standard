@@ -1,0 +1,296 @@
+Apex Coding Standard
+
+Introduction
+-------------
+Apex is a strongly-typed, object-oriented, proprietary programming language for the Force.com platform. 
+It lets you execute flow and transaction control statements in conjunction with calls to the Force.com API.
+Apex borrows it's syntax from Java, and functions like a database stored procedure. 
+
+To learn more about Apex, read the developer documentation on the Force.com developer site.
+[http://www.salesforce.com/us/developer/docs/apexcode/index.htm]
+
+Unfortunately, there is no official coding convention defined by Salesforce.com which the developers can follow to 
+create Force.com applications. This has led to developers using random coding style. If the developer has previously
+worked with another language they carry over the coding convention of that language to Apex. It's even more chaotic 
+if they haven't used a programming language before. They just create their own coding style. This leads to 
+inconsistency and becomes frustrating when you are reading an open source code or a code snippet in a blog post.
+
+The aim of this document is to list a set of coding standards that can be used as a reference when developing 
+applications on the Force.com platform. I was a Java developer in my previous life and these standards are heavily 
+influenced by the official Java Coding Convention [http://www.oracle.com/technetwork/java/codeconv-138413.html]. 
+Some of the rules have been copied verbatim from this document.
+
+Naming Convention
+------------------
+
+  Classes: 
+     As per Object Oriented Programming language rules, class names should be nouns. They should define or describe a 
+     thing or entity. A class name should be camel-case. The first letter of each word in the class name should be 
+     capitalized.The class name should be simple and descriptive. Acronyms and abbreviations should be used sparingly 
+     and economically to avoid confusion. Do not use underscore or other special characters in a class name.
+     e.g. Account, RevenueDepartment, MinecraftVehicle
+
+     There are a few recommended variations for different types of classes
+        Batch Apex Class: The class name should be suffixed by 'Batch'. 
+                          e.g. AccountRefundBatch, ValidateOpportunityBatch
+        Controller: The class name is typically suffixed by 'Controller' 
+                    e.g. SolarEnergyController, NewAccountController
+        Trigger: If you follow the new Trigger 'proto-pattern'[http://bit.ly/cX6VK7], then the main sObject trigger 
+                 name should be suffixed by 'Trigger', and the handler Class should be suffixed by 'TriggerHandler' 
+                 e.g. AccountTrigger, AccountTriggerHandler
+                 Remember there are more than one Trigger proto-patterns out there[http://bit.ly/owlIZu].
+                 Amend your coding style according to the pattern selected.
+        Test Classes: A test class should be suffixed by 'Test'. e.g. DebitAccountTest, CreditAccountTest
+
+  Interfaces:
+     Interface names follow the same rules as Classes and should be prefixed with a capital I e.g. IRecipe, ICoupon.  
+     Where the interface is describing the ability to be used in a certain way, the interface name should be an 
+     adjective and end with the suffix 'ible' or 'able' e.g. IBatchable
+
+  
+  Variables: 
+     Variable names should be mixed case with a lowercase first letter and each consecutive word starts with capital 
+     letters. This rule applies to instance and class variables. They should not start with an underscore(_), a 
+     dollar sign($), even though both are allowed. Infact you should avoid using underscores or special characters in 
+     a variable name. Variables names should short yet meaningful. It should indicate the intent of its use. 
+     Avoid single letter variable names like (i, j, k), unless they are used as a throwaway variable in a loop.
+
+  Constants:
+     Constants (i.e. variables defined as static final int), are a special type of variable and a constant name 
+     should be all uppercase with words seperated by underscores(_). Avoid any special characters in a constant name.
+     e.g MIN_WIDTH, UK_CURRENCY
+
+  Methods:
+     Method name should be a verb, an action. Like a variable name, it should be mixed case with a lowercase first 
+     letter and the first letter of each internal word capitalized.
+
+  Documents:
+     You should follow the following naming proto-pattern for Documents.
+     'Project Name - Title of Document - Document Order - Version'
+
+
+Code Layout and Formatting
+--------------------------
+A well formatted code increases readability, understanding and ultimately maintainability of the code base. 
+A developer should strive to use a consistent layout and format. It will make the lives of other developers
+(who want to read, review, or maintain your code) a lot easier. I have listed a few guidelines as to how a 
+Force.com developer should format code. 
+
+  == Wrapping Lines:
+
+     When an expression will not fit on a single line, break it according to these general principles:
+       * Break after a comma
+       * Break before an operator
+       * Prefer higher-level breaks to lower-level breaks
+       * Align the new line with the beginning of the expression at the same level on the previous line.
+       * If the above rules lead to confusing code or to code that's squished up against the right margin, just 
+         indent 8 spaces instead. 
+
+     Here are some examples of breaking method calls:
+
+       someMethod(longExpression1, longExpression2, longExpression3, 
+                  longExpression4, longExpression5);
+       var = someMethod1(longExpression1,
+                         someMethod2(longExpression2,
+                         longExpression3)); 
+
+     Following are two examples of breaking an arithmetic expression. 
+     The first is preferred, since the break occurs outside the parenthesized expression, which is at a higher level.
+
+        longName1 = longName2 * (longName3 + longName4 - longName5)
+                    + 4 * longname6; // PREFER
+
+        longName1 = longName2 * (longName3 + longName4
+                                 - longName5) + 4 * longname6; // AVOID 
+
+     Following are two examples of indenting method declarations. 
+     The first is the conventional case. 
+     The second would shift the second and third lines to the far right if it used conventional indentation, so 
+     instead it indents only 8 spaces.
+
+         //CONVENTIONAL INDENTATION
+         someMethod(int anArg, Object anotherArg, String yetAnotherArg,
+               Object andStillAnother) {
+        ...
+        }
+
+         //INDENT 8 SPACES TO AVOID VERY DEEP INDENTS
+         private static synchronized horkingLongMethodName(int anArg,
+                 Object anotherArg, String yetAnotherArg,
+                 Object andStillAnother) {
+        ...
+         }
+
+      Line wrapping for if statements should generally use the 8-space rule, since conventional (4 space)
+      indentation makes seeing the body difficult. For example:
+
+         //DON'T USE THIS INDENTATION
+         if ((condition1 && condition2)
+            || (condition3 && condition4)
+            ||!(condition5 && condition6)) { //BAD WRAPS
+            doSomethingAboutIt();            //MAKE THIS LINE EASY TO MISS
+         } 
+
+         //USE THIS INDENTATION INSTEAD
+         if ((condition1 && condition2)
+                 || (condition3 && condition4)
+                 ||!(condition5 && condition6)) {
+            doSomethingAboutIt();
+         } 
+
+        //OR USE THIS
+        if ((condition1 && condition2) || (condition3 && condition4)
+                ||!(condition5 && condition6)) {
+            doSomethingAboutIt();
+        } 
+
+      Here are three acceptable ways to format ternary expressions:
+
+         alpha = (aLongBooleanExpression) ? beta : gamma;  
+
+         alpha = (aLongBooleanExpression) ? beta
+                                          : gamma;  
+
+         alpha = (aLongBooleanExpression)
+                 ? beta 
+                 : gamma;  
+
+
+  == Placement:
+
+    Put declarations only at the beginning of blocks. (A block is any code surrounded by curly braces "{" and "}".) 
+    Don't wait to declare variables until their first use; it can confuse the unwary programmer and hamper code 
+    portability within the scope.
+
+        void myMethod() {
+            int int1 = 0;         // beginning of method block
+
+            if (condition) {
+                 int int2 = 0;     // beginning of "if" block
+            ...
+            }
+        }
+
+    The one exception to the rule is indexes of for loops, which in Java can be declared in the for statement:
+
+        for (int i = 0; i < maxLoops; i++) { ... }
+
+    Avoid local declarations that hide declarations at higher levels. For example, do not declare the same variable 
+    name in an inner block:
+
+        int count;
+    ...
+        myMethod() {
+            if (condition) {
+                int count = 0; // AVOID!
+            ...
+            }
+        ...
+        }
+
+
+  == Class and Interface Declarations:
+
+    When coding Apex classes and interfaces, the following formatting rules should be followed:
+        * No space between a method name and the parenthesis "(" starting its parameter list
+        * Open brace "{" appears at the end of the same line as the declaration statement 
+        * Closing brace "}" starts a line by itself indented to match its corresponding opening statement, 
+          except when it is a null statement the "}" should appear immediately after the "{"
+
+           class Sample extends Object {
+                int ivar1;
+                int ivar2;
+
+                Sample(int i, int j) {
+                    ivar1 = i;
+                    ivar2 = j;
+                }
+
+                int emptyMethod() {}
+
+           }
+
+  == if, if-else, if else-if else Statements:
+
+    The if-else class of statements should have the following form:
+
+        if (condition) {
+            statements;
+        }
+        
+        if (condition) {
+            statements;
+        } else {
+            statements;
+        }
+        
+        if (condition) {
+            statements;
+        } else if (condition) {
+            statements;
+        } else {
+            statements;
+        }
+
+    Note: if statements should always use braces {}. Avoid the following error-prone form:
+        if (condition) //AVOID! THIS OMITS THE BRACES {}!
+            statements;
+        
+  == for Loop
+
+    A for loop should have the following format:
+        
+        //traditional for loop
+        for (initStatement; exitCondition, incrementStatement) {
+            //code block
+        }
+
+        //set iteration for loop
+        for (variable : list_or_set) {
+            //code block
+        }
+
+        //SOQL for loop
+        for (variable : [soql query]) {
+            //code block
+        }
+
+    Make sure you break the query into multiple lines if it is a long query.
+
+
+  == try-catch Statements:
+
+    A try-catch statement should have the following format:
+
+        try {
+            statements;
+        } catch (ExceptionClass e) {
+            statements;
+        }
+
+    A try-catch statement may also be followed by finally, which executes regardless of whether or not the 
+    try block has completed successfully.
+
+        try {
+            statements;
+        } catch (ExceptionClass e) {
+            statements;
+        } finally {
+            statements;
+        }
+
+  == Blank Lines:
+
+    Blank lines improve readability by setting off sections of code that are logically related.
+
+    Two blank lines should always be used in the following circumstances:
+
+        * Between sections of a source file
+        * Between class and interface definitions 
+
+    One blank line should always be used in the following circumstances:
+
+        * Between methods
+        * Between the local variables in a method and its first statement
+        * Before a block or single-line comment
+        * Between logical sections inside a method to improve readability
