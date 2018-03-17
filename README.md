@@ -136,16 +136,15 @@ Avoid lines longer than 100 characters, for consistency with IDEs and text edito
 
 #### 4.2 Wrapping Lines
 
-
 ##### 4.2.1 Principles
 
 When an expression will not fit on a single line, break it according to these general principles:
 
-- Break after a comma.
-- Break before an operator.
-- Prefer higher-level breaks to lower-level breaks.
-- Align the new line with the beginning of the expression at the same level on the previous line.
-- If the above rules lead to confusing code or to code that is squished up against the right margin, just indent 8 spaces (2 tabs) instead.
+* Break after a comma.
+* Break before an operator.
+* Prefer higher-level breaks to lower-level breaks.
+* Align the new line with the beginning of the expression at the same level on the previous line.
+* If the above rules lead to confusing code or to code that is squished up against the right margin, just indent 8 spaces (2 tabs) instead.
 
 #### 4.2.2 Examples
 
@@ -162,6 +161,7 @@ private class SomeClass {
 ```
 
 ##### 4.2.2.2 Instance Declarations
+
 The method line above has 95 characters (counting the 4 whitespaces before `public`), and it applies the first principle of breaking after a comma. Note that by using an extra indentation on the signature on the lower line we avoid the confusion of where the scope actually starts.
 
 ```java
