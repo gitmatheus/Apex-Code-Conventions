@@ -25,7 +25,6 @@
 |PopulateOrders_Batch       |OrderPopulationBatch        |
 |TestAccountsWebServices    |AccountWebServiceTest       |
 
-
 ## 2. Variable naming
 
 * CamelCase starting from lowercase letter only. Exceptions are:
@@ -48,7 +47,6 @@
 |opportunitiesMap           |triggeredOpportunityMap     |
 |uniqueData                 |orderSet                    |
 
-
 ## 3. Method naming
 
 * CamelCase starting from lowercase letter only.
@@ -60,27 +58,43 @@
 |---------------------------|----------------------------|
 |getOpportunities           | obtainWonOpportunityList   |
 
-
 ## 4. Constants naming
 
 * Constants (i.e. variables defined as static final) should be in uppercase with words separated by underscores:
+
 ```java
 public static final String PAYPAL_LOGIN_URL = 'https://login.paypal.com/';
 ```
 
 ## 5. SOQL and SOSL queries
 
-* SOQL and SOSL commands should be in uppercase:
+* SOQL and SOSL keywords should be uppercase.
+* Fields to retrieve should be on separate lines, with the separating comma on the same line as the field.
+
 ```SQL
-SELECT Id, Name, Custom_Field__c
-  FROM Contact
- WHERE Name != null
+SELECT
+Id
+,Name
+,CustomField__c
+FROM Contact
+WHERE Name != null
+```
+
+When using on Apex, prefer this syntax:
+
+```java
+List<Contact> contactsWithSpecificLastName = [
+    SELECT
+    Id
+    ,FirstName
+    FROM Contact
+    WHERE LastName = :specifiedLastName
+];
 ```
 
 ## 6. Comments
 
-All methods must have a comment. Depending on the number of lines of code within a method comment as much as possible. Note that someone else will be maintaining the code. Use Javadoc commenting style (http://www.oracle.com/technetwork/java/javase/documentation/index-137868.
-html) which can then be consumed by ApexDocs (https://gitlab.com/StevenWCox/sfapexdoc) to generate documentation easily.
+All methods must have a comment. Depending on the number of lines of code within a method comment as much as possible. Note that someone else will be maintaining the code. Use Javadoc commenting style (<http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html>) which can then be consumed by ApexDocs (<https://gitlab.com/StevenWCox/sfapexdoc>) to generate documentation easily.
 
 ``` java
 // Classes should be commented as follows:
