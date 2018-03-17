@@ -216,3 +216,66 @@ result = (aLongexpression)
 ```
 
 As exemplified above, there are three ways to format ternary expressions.
+
+## 8. White Space
+
+Blank lines improve readability by setting off sections of code that are logically related.
+
+Two blank lines should be used in the following:
+
+* Between sections of a source file
+* Between class and interface definitions
+
+One blank line should be used in the following:
+
+* Between methods
+* Between the local variables in a method and its first statement
+* Before a block or a single line comment
+
+### 8.2 Blank Spaces
+
+Blank spaces should be used in the following circumstances:
+
+* A keyword followed by a parenthesis should be separated by a single space.
+
+```java
+while(true){ // WRONG
+    ...
+}
+
+while (true) { // CORRECT
+    ...
+}
+```
+
+* A blank space should appear after commas in argument lists.
+
+```java
+method(Object anObjectArg,Integer anIntegerArg){ // WRONG
+    ...
+}
+
+method(Object anObjectArg, Integer anIntegerArg) { // CORRECT
+    ...
+}
+```
+
+* Expressions inside a `for` statement:
+
+```java
+for (Integer i=0;i<10;i++) { // WRONG
+    ...
+}
+
+for (Integer i = 0; i < 10; i++) { // CORRECT
+    ...
+}
+```
+
+* Object casts:
+
+```java
+ObjectA objInstance = (ObjectA)anotherType; // WRONG
+
+ObjectA objInstance = (ObjectA) anotherType; // CORRECT
+```
