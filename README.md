@@ -125,3 +125,94 @@ public class SomeClass {
     }
 }
 ```
+
+## 7. Indentation
+
+Four spaces should be used as the unit of indentation. The exact construction of the indentation should be the space.
+
+### 7.1 Line Length
+
+Avoid lines longer than 100 characters, for consistency with IDEs and text editors. If a line exceeds 100 characters, it should be broken into two or more lines, depending on the situation (see below).
+
+#### 4.2 Wrapping Lines
+
+
+##### 4.2.1 Principles
+
+When an expression will not fit on a single line, break it according to these general principles:
+
+- Break after a comma.
+- Break before an operator.
+- Prefer higher-level breaks to lower-level breaks.
+- Align the new line with the beginning of the expression at the same level on the previous line.
+- If the above rules lead to confusing code or to code that is squished up against the right margin, just indent 8 spaces (2 tabs) instead.
+
+#### 4.2.2 Examples
+
+##### 4.2.2.1 Method Signatures
+
+```java
+private class SomeClass {
+    public static void doSomethingReallyComplicated(Integer sumOfSomething, Decimal anotherSum,
+            String nameOfThatThing) {
+        Object someObject = SomeOtherClass.getObject();
+        // ...
+    }
+}
+```
+
+##### 4.2.2.2 Instance Declarations
+The method line above has 95 characters (counting the 4 whitespaces before `public`), and it applies the first principle of breaking after a comma. Note that by using an extra indentation on the signature on the lower line we avoid the confusion of where the scope actually starts.
+
+```java
+public with sharing class SomeClass {
+    // ...
+    public void someMethod () {
+        AnotherClass.AClassChildren bigVariableName
+            = new AnotherClass.AClassChildren(this.someVariable);
+    }
+}
+```
+
+The instance declaration on line 3 would use 105 characters, but with the principle of breaing before an operator it will use 65 characters on the lower line.
+
+##### 4.2.2.3 Conditionals
+
+```java
+// DON'T DO THIS
+if ((condition1 && condition2)
+    || (condition3 && ocndition4)
+    || !(condition5 && condition6)) {
+    doSomething();
+}
+```
+
+```java
+//DO THIS
+if ((condition1 && condition2)
+        || (condition3 && condition4)
+        || !(condition5 && condition6)) {
+    doSomething();
+}
+```
+
+Bad wraps like the one on the first example make easy to miss the part where the method's signature ends and when the scope actually begins. Good wraps help to make those clearer, and not so easy to miss.
+
+##### 4.2.2.4 Ternary Expressions
+
+```java
+// if it fits on the 100 character limit:
+result = (aLongExpression) ? something : anotherThing;
+
+// if it doesn't fit the 100 character limit use this:
+result = (aLongExpression) ? something
+                           : anotherThing;
+
+// or this:
+result = (aLongexpression)
+         ? something
+         : anotherThing;
+
+```
+
+As exemplified above, there are three ways to format ternary expressions.
