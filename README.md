@@ -213,6 +213,7 @@ if (!condition1) {
 //DO THIS
 if (!condition1) continue; // If condition1 is required for the rest of the steps
 
+// The code will only get here if condition1 is true:
 if (condition2) doSomething02();
 if (condition3) doSomething03();
 
