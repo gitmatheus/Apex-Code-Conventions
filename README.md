@@ -192,12 +192,38 @@ public with sharing class SomeClass {
 
 The instance declaration on line 3 would use 105 characters, but with the principle of breaing before an operator it will use 65 characters on the lower line.
 
-##### 4.2.2.3 Conditionals
+##### 4.2.2.3.1 Conditionals - Bail before if possible
+
+When declaring IF statements, start with the conditions that can skip the process, or bail before running unecessary code. 
+
+```java
+// DON'T DO THIS
+if (condition1 && condition2) {
+    doSomething02();
+}
+if (condition1 && condition3) {
+    doSomething03();
+}
+if (!condition1) {
+    continue;
+}
+```
+
+```java
+//DO THIS
+if (!condition1) continue; // If condition1 is required for the rest of the steps
+
+if (condition2) doSomething02();
+if (condition3) doSomething03();
+
+```
+
+##### 4.2.2.3.2 Conditionals - Formatting
 
 ```java
 // DON'T DO THIS
 if ((condition1 && condition2)
-    || (condition3 && ocndition4)
+    || (condition3 && condition4)
     || !(condition5 && condition6)) {
     doSomething();
 }
@@ -221,11 +247,11 @@ Bad wraps like the one on the first example make easy to miss the part where the
 result = (aLongExpression) ? something : anotherThing;
 
 // if it doesn't fit the 100 character limit use this:
-result = (aLongExpression) ? something
-                           : anotherThing;
+result = (aVeryLongExtremelyLongExpression) ? something
+                                            : anotherThing;
 
 // or this:
-result = (aLongexpression)
+result = (aVeryLongExtremelyLongExpression)
          ? something
          : anotherThing;
 
@@ -259,6 +285,10 @@ while(true){ // WRONG
     ...
 }
 
+while(true) { // ACCEPTABLE
+    ...
+}
+
 while (true) { // CORRECT
     ...
 }
@@ -283,6 +313,10 @@ for (Integer i=0;i<10;i++) { // WRONG
     ...
 }
 
+for(Integer i = 0; i < 10; i++) { // ACCEPTABLE
+    ...
+}
+
 for (Integer i = 0; i < 10; i++) { // CORRECT
     ...
 }
@@ -291,7 +325,9 @@ for (Integer i = 0; i < 10; i++) { // CORRECT
 * Object casts:
 
 ```java
-ObjectA objInstance = (ObjectA)anotherType; // WRONG
+ObjectA objInstance=(ObjectA)anotherType; // WRONG
+
+ObjectA objInstance = (ObjectA)anotherType; // ACCEPTABLE
 
 ObjectA objInstance = (ObjectA) anotherType; // CORRECT
 ```
