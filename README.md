@@ -69,16 +69,28 @@ public static final String PAYPAL_LOGIN_URL = 'https://login.paypal.com/';
 ## 5. SOQL and SOSL queries
 
 * SOQL and SOSL keywords should be uppercase.
-* Fields to retrieve should be on separate lines, with the separating comma on the same line as the field.
+* Fields to retrieve should be on separate lines, with the separating comma on the same line as the field, unless there are just a few fields being retrieved. Then it is acceptable to have the query on a single line (see convention 7.1, about line length).
+
+```java
+List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE AccountId IN :accountIdSet];
+```
+
+In this example the line takes 89 characters, which is below the limit imposed by convention 7.1 (line length).
 
 ```SQL
 SELECT
 Id
-,Name
+,FirstName
+,LastName
+,Phone
+,Email
 ,CustomField__c
+,AnotherField__c
 FROM Contact
 WHERE Name != null
 ```
+
+In this situation the query alone would take more than 100 characters, excluding whitespace and variable declaration. To comply with convention 7.1 we format it to one field and condition per line. This makes it easier to edit which fields and conditions are being used on this query.
 
 When using on Apex, prefer this syntax:
 
