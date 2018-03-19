@@ -78,16 +78,15 @@ List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE AccountId IN :accou
 In this example the line takes 89 characters, which is below the limit imposed by convention 7.1 (line length).
 
 ```SQL
-SELECT
-Id
-,FirstName
-,LastName
-,Phone
-,Email
-,CustomField__c
-,AnotherField__c
+SELECT  Id,
+        FirstName,
+        LastName,
+        Phone,
+        Email,
+        CustomField__c,
+        AnotherField__c
 FROM Contact
-WHERE Name != null
+WHERE Name != NULL
 ```
 
 In this situation the query alone would take more than 100 characters, excluding whitespace and variable declaration. To comply with convention 7.1 we format it to one field and condition per line. This makes it easier to edit which fields and conditions are being used on this query.
@@ -96,12 +95,17 @@ When using on Apex, prefer this syntax:
 
 ```java
 List<Contact> contactsWithSpecificLastName = [
-    SELECT
-    Id
-    ,FirstName
+    SELECT  Id,
+            FirstName,
+            LastName,
+            Email,
+            Phone,
+            CustomField__c,
+            AnotherField__c
     FROM Contact
     WHERE LastName = :specifiedLastName
 ];
+
 ```
 
 ## 6. Comments
