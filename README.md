@@ -78,16 +78,15 @@ List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE AccountId IN :accou
 In this example the line takes 89 characters, which is below the limit imposed by convention 7.1 (line length).
 
 ```SQL
-SELECT
-Id
-,FirstName
-,LastName
-,Phone
-,Email
-,CustomField__c
-,AnotherField__c
+SELECT  Id,
+        FirstName,
+        LastName,
+        Phone,
+        Email,
+        CustomField__c,
+        AnotherField__c
 FROM Contact
-WHERE Name != null
+WHERE Name != NULL
 ```
 
 In this situation the query alone would take more than 100 characters, excluding whitespace and variable declaration. To comply with convention 7.1 we format it to one field and condition per line. This makes it easier to edit which fields and conditions are being used on this query.
@@ -96,12 +95,17 @@ When using on Apex, prefer this syntax:
 
 ```java
 List<Contact> contactsWithSpecificLastName = [
-    SELECT
-    Id
-    ,FirstName
+    SELECT  Id,
+            FirstName,
+            LastName,
+            Email,
+            Phone,
+            CustomField__c,
+            AnotherField__c
     FROM Contact
     WHERE LastName = :specifiedLastName
 ];
+
 ```
 
 ## 6. Comments
@@ -186,12 +190,39 @@ public with sharing class SomeClass {
 
 The instance declaration on line 3 would use 105 characters, but with the principle of breaing before an operator it will use 65 characters on the lower line.
 
-##### 7.2.3 Conditionals
+##### 7.2.3.1 Conditionals - Bail before if possible
+
+When declaring IF statements, start with the conditions that can skip the process, or bail before running unecessary code. 
+
+```java
+// DON'T DO THIS
+if (condition1 && condition2) {
+    doSomething02();
+}
+if (condition1 && condition3) {
+    doSomething03();
+}
+if (!condition1) {
+    continue;
+}
+```
+
+```java
+//DO THIS
+if (!condition1) continue; // If condition1 is required for the rest of the steps
+
+// The code will only get here if condition1 is true:
+if (condition2) doSomething02();
+if (condition3) doSomething03();
+
+```
+
+##### 7.2.3.2 Conditionals - Formatting
 
 ```java
 // DON'T DO THIS
 if ((condition1 && condition2)
-    || (condition3 && ocndition4)
+    || (condition3 && condition4)
     || !(condition5 && condition6)) {
     doSomething();
 }
@@ -215,11 +246,11 @@ Bad wraps like the one on the first example make easy to miss the part where the
 result = (aLongExpression) ? something : anotherThing;
 
 // if it doesn't fit the 100 character limit use this:
-result = (aLongExpression) ? something
-                           : anotherThing;
+result = (aVeryLongExtremelyLongExpression) ? something
+                                            : anotherThing;
 
 // or this:
-result = (aLongexpression)
+result = (aVeryLongExtremelyLongExpression)
          ? something
          : anotherThing;
 
@@ -253,6 +284,10 @@ while(true){ // WRONG
     ...
 }
 
+while(true) { // ACCEPTABLE
+    ...
+}
+
 while (true) { // CORRECT
     ...
 }
@@ -277,6 +312,10 @@ for (Integer i=0;i<10;i++) { // WRONG
     ...
 }
 
+for(Integer i = 0; i < 10; i++) { // ACCEPTABLE
+    ...
+}
+
 for (Integer i = 0; i < 10; i++) { // CORRECT
     ...
 }
@@ -285,7 +324,9 @@ for (Integer i = 0; i < 10; i++) { // CORRECT
 * Object casts:
 
 ```java
-ObjectA objInstance = (ObjectA)anotherType; // WRONG
+ObjectA objInstance=(ObjectA)anotherType; // WRONG
+
+ObjectA objInstance = (ObjectA)anotherType; // ACCEPTABLE
 
 ObjectA objInstance = (ObjectA) anotherType; // CORRECT
 ```
