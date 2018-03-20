@@ -146,9 +146,7 @@ Four spaces should be used as the unit of indentation. The exact construction of
 
 Avoid lines longer than 100 characters, for consistency with IDEs and text editors. If a line exceeds 100 characters, it should be broken into two or more lines, depending on the situation (see below).
 
-#### 4.2 Wrapping Lines
-
-##### 4.2.1 Principles
+### 7.2 Wrapping Lines
 
 When an expression will not fit on a single line, break it according to these general principles:
 
@@ -158,9 +156,9 @@ When an expression will not fit on a single line, break it according to these ge
 * Align the new line with the beginning of the expression at the same level on the previous line.
 * If the above rules lead to confusing code or to code that is squished up against the right margin, just indent 8 spaces (2 tabs) instead.
 
-#### 4.2.2 Examples
+#### Examples
 
-##### 4.2.2.1 Method Signatures
+##### 7.2.1 Method Signatures
 
 ```java
 private class SomeClass {
@@ -172,7 +170,7 @@ private class SomeClass {
 }
 ```
 
-##### 4.2.2.2 Instance Declarations
+##### 7.2.2 Instance Declarations
 
 The method line above has 95 characters (counting the 4 whitespaces before `public`), and it applies the first principle of breaking after a comma. Note that by using an extra indentation on the signature on the lower line we avoid the confusion of where the scope actually starts.
 
@@ -188,7 +186,7 @@ public with sharing class SomeClass {
 
 The instance declaration on line 3 would use 105 characters, but with the principle of breaing before an operator it will use 65 characters on the lower line.
 
-##### 4.2.2.3 Conditionals
+##### 7.2.3 Conditionals
 
 ```java
 // DON'T DO THIS
@@ -210,7 +208,7 @@ if ((condition1 && condition2)
 
 Bad wraps like the one on the first example make easy to miss the part where the method's signature ends and when the scope actually begins. Good wraps help to make those clearer, and not so easy to miss.
 
-##### 4.2.2.4 Ternary Expressions
+##### 7.2.4 Ternary Expressions
 
 ```java
 // if it fits on the 100 character limit:
