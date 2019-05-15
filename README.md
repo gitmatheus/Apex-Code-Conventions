@@ -330,3 +330,72 @@ ObjectA objInstance = (ObjectA)anotherType; // ACCEPTABLE
 
 ObjectA objInstance = (ObjectA) anotherType; // CORRECT
 ```
+
+## 9. Error Messages
+
+It's quite common to have situations where an error message will be displayed to your users. Situations like that can be frustrating to the user, so we need to follow best practices of UX. Always remember: 
+
+
+[“A product should be usable enough to handle the user’s actions gracefully.”](https://www.designprinciplesftw.com/collections/10-usability-heuristics-for-user-interface-design)
+
+We need to make sure we're handling these actions and errors properly, because it will impact  the experience that product is providing to its users. Below mentioned are few tips that when followed, error messages can also provide a pleasant experience to the user.
+
+### Be Clear And Not Ambiguous
+
+* Write error message in clear and simple language. User should be able to understand the problem while reading an error message.
+
+*Bad*: _"The metadata doesn't contain the required component."_
+
+*Good*: _"We couldn't find the [name_of_the_component] component."_
+
+### Be Short and meaningful
+
+* Error message should contain necessary information. Most of the time user is not willing to read a long story.
+* Be concise and write a short description that is meaningful for user and gives him a clear idea of the problem and how to resolve it.
+* Avoid using redundant words and do not over communicate the problem.
+
+*Bad*: _"The name you used for the Account was not found when querying for accounts in order to validate the test, so please change the Account name."_
+
+*Good*: _"We couldn't find the Account 'AccountTest' Please check the name and try again."_
+
+### Don't use technical jargon
+
+* Most of the users are not interested in technical details of the problem occurred. If a message contains technical terms or jargons, the user gets confused.
+
+*Bad*: _"Error when reading the raw response from the HTTP method to perform on the REST API service URI when reading the asynchronous tests classes body"_
+
+*Good*: _"We couldn't find the class 'AsynchronousRollupTest' "_
+
+### Be Humble, don't blame the user
+
+* A good error message is humble. It conveys the issues gracefully to its user without blaming them for their actions.
+* The user can perform an incorrect action again and again. But the design’s responsibility is to inform him about his mistakes in a good way.
+
+*Bad*: _"*You* forgot to create the Opportunity records!"_
+
+*Good*: _"We couldn't find the Opportunity records. Please check if the they were created and try again."_
+
+### Give directions to the user
+
+* A good error message has three parts: problem identification, cause details if helpful, and a suggestion to lead the user to the solution.  
+* Whenever an error occurs, user wants to fix it as soon as possible. The error message should have enough information for user that guides him how to get out of the erroneous situation.
+
+*Bad*: _"Account object has some missing field."_
+
+*Good*: _"We couldn't find the field 'Summary' in the object Account."_
+
+### Be specific and relevant
+
+* The message should contain relevant information so that user can relate specified location and options easily.
+* Point out the exact location of problem — where user should go and and what steps are needed to follow to resolve it.
+
+*Bad*: _"Something went wrong with the territories"_
+
+*Good*: _"We couldn't find the required Territory Assignment. Please review the requirements and check if the assignment was created correctly."_
+
+*Final considerations*: 
+
+Please, do not use *Uppercase* text. BECAUSE IT MAY SOUND LIKE YOU'RE SCREAMING! 😉
+
+Also, there are some situations where *humor* might be nice, but please keep it lighthearted and don't overuse it. 
+
